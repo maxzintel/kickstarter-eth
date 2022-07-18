@@ -17,10 +17,12 @@ contract Campaign {
 
    constructor(uint minimum) public {
     manager = msg.sender;
-    minContribution = minimum;
+    minContribution = minimum; // allow manager to set this on the fly.
   }
 
   function contribute() public payable {
+    require(msg.value > minContribution);
+    
     approvers.push(msg.sender); // This needs logic to discern if someone has already been added to the list.
   }
 
