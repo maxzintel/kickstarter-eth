@@ -10,10 +10,10 @@ contract Campaign {
     _;
   }
 
-  modifier restrictApprover() {
-    //require msg.sender to be in the array of approvers.
-    _;
-  }
+  // modifier restrictApprover() {
+  //   //require msg.sender to be in the array of approvers.
+  //   _;
+  // }
 
    constructor(uint minimum) public {
     manager = msg.sender;
@@ -22,19 +22,19 @@ contract Campaign {
 
   function contribute() public payable {
     require(msg.value > minContribution);
-    
+
     approvers.push(msg.sender); // This needs logic to discern if someone has already been added to the list.
   }
 
-  function createRequest() public restrictManager {
+  // function createRequest() public restrictManager {
 
-  }
+  // }
 
-  function approveRequest() public restrictApprover {
+  // function approveRequest() public restrictApprover {
 
-  }
+  // }
 
-  function finalizeRequest() public restrictManager {
+  // function finalizeRequest() public restrictManager {
 
-  }
+  // }
 }
