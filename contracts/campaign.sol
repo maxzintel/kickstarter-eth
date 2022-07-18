@@ -15,12 +15,12 @@ contract Campaign {
     _;
   }
 
-   constructor() public {
+   constructor(uint minimum) public {
     manager = msg.sender;
+    minContribution = minimum;
   }
 
   function contribute() public payable {
-    require(msg.value > 0.01 ether);
     approvers.push(msg.sender); // This needs logic to discern if someone has already been added to the list.
   }
 
@@ -33,6 +33,6 @@ contract Campaign {
   }
 
   function finalizeRequest() public restrictManager {
-    
+
   }
 }
