@@ -38,6 +38,9 @@ contract Campaign {
   function createRequest(string description, uint value, address recipient) 
   public restrictManager 
   {
+    // Request = Prep to create a new variable that will contain a 'Request'/will be of type 'Request
+    // newRequest = The name of the instance of type Request
+    // Request({}) = the instance of Request
     Request newRequest = Request({
       description: description,
       value: value,
