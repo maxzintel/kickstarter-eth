@@ -33,7 +33,18 @@ contract Campaign {
     approvers.push(msg.sender); // This needs logic to discern if someone has already been added to the list.
   }
 
-  function createRequest() public restrictManager {
-    
+  // create instance of struct Request
+  // manager must provide description, value, and recipient.
+  function createRequest(string description, uint value, address recipient) 
+  public restrictManager 
+  {
+    Request newRequest = Request({
+      description: description,
+      value: value,
+      recipient: recipient,
+      complete: false
+    });
+
+    requests.push(newRequest); // Push this new request to the requests array.
   }
 }
