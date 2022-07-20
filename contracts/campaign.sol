@@ -47,6 +47,10 @@ contract Campaign {
       recipient: recipient,
       complete: false
     });
+    // Alternative syntax for above (not recommended):
+    // Request(description, value, recipient, false);
+    // Provides only the values from the functions argument list.
+    // Far less explicit that above syntax.
 
     requests.push(newRequest); // Push this new request to the requests array.
   }
