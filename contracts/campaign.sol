@@ -4,6 +4,13 @@ contract Campaign {
   address public manager;
   uint public minContribution;
   address[] public approvers;
+
+  struct Request {
+    string description;
+    uint value;
+    address recipient;
+    bool complete;
+  }
   
   modifier restrictManager() {
     require(msg.sender == manager);
