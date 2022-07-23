@@ -14,7 +14,7 @@ contract Campaign {
   Request[] public requests; // Create array of Request type. Behaves just like normal array.
   address public manager;
   uint public minContribution;
-  address[] public approvers;
+  mapping(address => bool) public approvers;
   
   // How modifiers work is essentially, each function that has this on it will be
   // pasted below the logic we put in.
@@ -22,17 +22,22 @@ contract Campaign {
     require(msg.sender == manager);
     _; // where we want the virtual pasting to occur.
   }
+
+  modifier restrictApprover() {
+    require(approvers[msg.sender]);
+    _;
+  }
   
   // args here are stored in MEMORY.
-  constructor(uint minimum) public {
+  constructor(uint minimum) {
     manager = msg.sender;
     minContribution = minimum; // allow manager to set this on the fly.
   }
 
-  function contribute() public payable {
+  function contribute(address _address) public payable {
     require(msg.value > minContribution);
 
-    approvers.push(msg.sender); // This needs logic to discern if someone has already been added to the list.
+    approvers[_address] = true;
   }
 
   // create instance of struct Request
@@ -55,5 +60,9 @@ contract Campaign {
     // Far less explicit that above syntax.
 
     requests.push(newRequest); // Push this new request to the requests array.
+  }
+
+  function approveRequest() restrictApprover {
+    
   }
 }
