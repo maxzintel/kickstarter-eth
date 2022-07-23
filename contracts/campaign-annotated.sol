@@ -51,21 +51,33 @@ contract Campaign {
   public restrictManager 
   {
 
-    Request storage newRequest = requests.push(); // push this new Request to the array of requests.
+    // COMMENTING OUT BELOW. CANNOT NEST MAPPING IN STRUCT.
+    // Request = Prep to create a new variable that will contain a 'Request'/will be of type 'Request
+    // newRequest = The name of the instance of type Request
+    // Request({}) = the instance of Request
+    // Request memory newRequest = Request({
+    //   description: description,
+    //   value: value,
+    //   recipient: recipient,
+    //   complete: false
+    // });
+    // Alternative syntax for above (not recommended):
+    // Request(description, value, recipient, false);
+    // Provides only the values from the functions argument list.
+    // Far less explicit that above syntax.
+    // requests.push(newRequest); // Push this new request to the requests array.
+
+    Request memory newRequest = requests[currentIndex];
     newRequest.description = description;
     newRequest.value = value;
     newRequest.recipient = recipient;
     newRequest.complete = false;
     newRequest.approvalCount = 0;
+    // currentIndex++;
   }
 
   // for now, each contributor can only vote once.
   function approveRequest(uint index) public restrictApprover {
-    Request storage request = requests[index];
 
-    require(!request.approvals[msg.sender]); // if this person has already voted on this contract, kick them out of the function call.
-
-    request.approvals[msg.sender] = true; // set this user as having voted.
-    request.approvalCount++; // increase approval count by 1.
   }
 }
