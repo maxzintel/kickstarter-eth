@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.15;
 
 contract Campaign {
@@ -8,6 +9,7 @@ contract Campaign {
     uint value; // amt of money that the manager wants to send to the vendor
     address recipient; // address of the vendor that would receive the money
     bool complete; // true if the request has been processed and money has been spent
+    // uint approvalCount;
   }
 
   // Held in contracts STORAGE.
@@ -15,6 +17,7 @@ contract Campaign {
   address public manager;
   uint public minContribution;
   mapping(address => bool) public approvers;
+  //       key    => val
   
   // How modifiers work is essentially, each function that has this on it will be
   // pasted below the logic we put in.
@@ -34,10 +37,11 @@ contract Campaign {
     minContribution = minimum; // allow manager to set this on the fly.
   }
 
-  function contribute(address _address) public payable {
+  function contribute() public payable {
     require(msg.value > minContribution);
 
-    approvers[_address] = true;
+    approvers[msg.sender] = true; // maps the address of the sender to the boolean true!
+    // Remember the key is not actually stored, its just used to look up the value.
   }
 
   // create instance of struct Request
@@ -62,7 +66,8 @@ contract Campaign {
     requests.push(newRequest); // Push this new request to the requests array.
   }
 
-  function approveRequest() restrictApprover {
-    
+  // for now, each contributor can only vote once.
+  function approveRequest(Request memory request) public restrictApprover {
+
   }
 }

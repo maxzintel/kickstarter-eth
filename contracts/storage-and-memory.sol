@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.15;
 
 // THIS IS JUST AN EXAMPLE TO DEPICT HOW STORAGE AND MEMORY ARE USED.
