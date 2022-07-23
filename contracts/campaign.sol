@@ -1,4 +1,4 @@
-pragma solidity ^0.4.17;
+pragma solidity ^0.8.15;
 
 contract Campaign {
 
@@ -10,6 +10,7 @@ contract Campaign {
     bool complete; // true if the request has been processed and money has been spent
   }
 
+  // Held in contracts STORAGE.
   Request[] public requests; // Create array of Request type. Behaves just like normal array.
   address public manager;
   uint public minContribution;
@@ -21,8 +22,9 @@ contract Campaign {
     require(msg.sender == manager);
     _; // where we want the virtual pasting to occur.
   }
-
-   constructor(uint minimum) public {
+  
+  // args here are stored in MEMORY.
+  constructor(uint minimum) public {
     manager = msg.sender;
     minContribution = minimum; // allow manager to set this on the fly.
   }
