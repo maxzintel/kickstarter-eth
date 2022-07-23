@@ -37,13 +37,13 @@ contract Campaign {
 
   // create instance of struct Request
   // manager must provide description, value, and recipient.
-  function createRequest(string description, uint value, address recipient) 
+  function createRequest(string memory description, uint value, address recipient) 
   public restrictManager 
   {
     // Request = Prep to create a new variable that will contain a 'Request'/will be of type 'Request
     // newRequest = The name of the instance of type Request
     // Request({}) = the instance of Request
-    Request newRequest = Request({
+    Request memory newRequest = Request({
       description: description,
       value: value,
       recipient: recipient,
