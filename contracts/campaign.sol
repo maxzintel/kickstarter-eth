@@ -7,7 +7,7 @@ contract Campaign {
   struct Request {
     string description; // describes why the request is being created
     uint value; // amt of money that the manager wants to send to the vendor
-    address recipient; // address of the vendor that would receive the money
+    address payable recipient; // address of the vendor that would receive the money
     bool complete; // true if the request has been processed and money has been spent
     uint approvalCount; // the number of 'yes' votes on the request
     mapping(address => bool) approvals; // map which addresses have voted such that they cannot re-vote.
@@ -19,6 +19,8 @@ contract Campaign {
   uint public minContribution;
   mapping(address => bool) public approvers;
   //       key    => val
+  uint public approversCount; // number of approvers
+
   
   // How modifiers work is essentially, each function that has this on it will be
   // pasted below the logic we put in.
@@ -42,12 +44,13 @@ contract Campaign {
     require(msg.value > minContribution);
 
     approvers[msg.sender] = true; // maps the address of the sender to the boolean true!
+    approversCount++;
     // Remember the key is not actually stored, its just used to look up the value.
   }
 
   // create instance of struct Request
   // manager must provide description, value, and recipient.
-  function createRequest(string memory description, uint value, address recipient) 
+  function createRequest(string memory description, uint value, address payable recipient) 
   public restrictManager 
   {
 
@@ -67,5 +70,16 @@ contract Campaign {
 
     request.approvals[msg.sender] = true; // set this user as having voted.
     request.approvalCount++; // increase approval count by 1.
+  }
+
+  // if approvals.length > 50% of approvers, we can finalize the request and pay the recipient.
+  function finalizeRequest(uint index) public restrictManager {
+    Request storage request = requests[index];
+
+    require(!request.complete);
+    require(request.approvalCount > (approversCount / 2));
+
+    request.recipient.transfer(request.value);
+    requests[index].complete = true;
   }
 }
