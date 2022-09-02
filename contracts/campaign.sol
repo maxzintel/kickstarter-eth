@@ -35,8 +35,8 @@ contract Campaign {
   }
   
   // args here are stored in MEMORY.
-  constructor(uint minimum) {
-    manager = msg.sender;
+  constructor(uint minimum, address creator) {
+    manager = creator;
     minContribution = minimum; // allow manager to set this on the fly.
   }
 
