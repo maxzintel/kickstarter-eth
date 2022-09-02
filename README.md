@@ -1,4 +1,4 @@
-# Kickstarter, but on ETH
+# Kickstarter but on Ethereum
 
 ## Campaign Contract
 
