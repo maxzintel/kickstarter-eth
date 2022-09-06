@@ -23,3 +23,14 @@ _
 _
 * Factory.createCampaign - Deploys a new instance of a Campaign and stores the resulting address.
 * Factory.getDeployedCampaigns - Returns a list of all deployed campaigns.
+
+### Compile
+
+In sequential order this script...
+
+* Deletes the contents of the build folder.
+* Reads factory.sol and campaign.sol from the contracts folder.
+* Compiles both contracts with the solidity compiler.
+* Writes the output to the build directory.
+
+<!-- If CI/CD is added, only run compile when contracts folder is actually changed. -->
