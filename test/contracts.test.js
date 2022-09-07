@@ -17,6 +17,15 @@ beforeEach(async () => {
   factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
     .deploy({ data: compiledFactory.bytecode })
     .send({ from: accounts[0], gas: '1000000' });
+
+  // minimum contribution is 100 wei for this campaign
+  await factory.methods.createCampaign('100').send({ from: accounts[0], gas: '1000000' });
+
+  // this function is a VIEW which means we change nothing
+  // thus we call() it rather than send() to it.
+  // the [] says take the first element from the array returned but the function call and assign it to the campaignAddress variable.
+  [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
+
 });
 
 describe('Campaign', () => {
