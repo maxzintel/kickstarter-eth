@@ -26,6 +26,11 @@ beforeEach(async () => {
   // the [] says take the first element from the array returned but the function call and assign it to the campaignAddress variable.
   [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
 
+  // Uses existing contract (already deployed via above)
+  campaign = await new web3.eth.Contract(
+    JSON.parse(compiledCampaign.interface),
+    campaignAddress
+  );
 });
 
 describe('Campaign', () => {
