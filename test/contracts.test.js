@@ -121,18 +121,15 @@ describe('Campaigns', () => {
     let executed;
 
     await campaign.methods
-      .createRequest('Buy Batteries', '100', receiver)
+      .createRequest('Buy Batteries', web3.utils.toWei('5', 'ether'), receiver)
       .send({
         from: manager,
         gas: '1000000'
       });
 
-    // get request we just made
-    const request = await campaign.methods.requests(0).call();
-
     await campaign.methods.contribute().send({ 
       from: approver, 
-      value: '1000000'
+      value: web3.utils.toWei('10', 'ether')
     });
 
     await campaign.methods.approveRequest(0).send({
