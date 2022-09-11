@@ -5,6 +5,7 @@ const web3 = new Web3(ganache.provider()); // instantiating the constructor abov
 
 const compiledFactory = require('../build/Factory.json');
 const compiledCampaign = require('../build/Campaign.json');
+const { exec } = require('child_process');
 
 let accounts;
 let factory;
@@ -56,25 +57,103 @@ describe('Campaigns', () => {
       value: '200'
     });
 
-    assert(campaign.methods.approvers(notManager).call());
+    const isContributor = await campaign.methods.approvers(notManager).call();
+    assert(isContributor);
   });
 
-  // it('does not allow contributions below the minimum', async () => {
+  it('does not allow contributions below the minimum', async () => {
+    const notManager = accounts[1];
+    let executed;
 
-  //   assert.ifError
-  // });
+    // Try contributing less than the minimum.
+    try {
+      await campaign.methods.contribute().send({ 
+        from: notManager, 
+        value: '90'
+      });
+      executed = 'success';
+    } catch(err) {
+      executed = 'failed';
+    }
 
-  // it('allows the manager to create a request', async () => {
+    assert.equal('failed', executed);
+  });
 
-  // });
+  it('allows the manager to create a request', async () => {
+    const manager = await campaign.methods.manager().call()
 
-  // it('does not allow non-managers to create requests', async () => {
+    await campaign.methods
+      .createRequest('Buy Batteries', '100', accounts[2])
+      .send({
+        from: manager,
+        gas: '1000000'
+      });
 
-  // });
+    // get request we just made
+    const request = await campaign.methods.requests(0).call();
 
-  // it('allows contributors to vote once on a request', async () => {
+    assert.equal('Buy Batteries', request.description);
+  });
 
-  // });
+  it('does not allow non-managers to create requests', async () => {
+    const notManager = accounts[1];
+    let executed;
+
+    try {
+      await campaign.methods
+      .createRequest('Buy Batteries', '100', accounts[2])
+      .send({
+        from: notManager,
+        gas: '1000000'
+      });
+      executed = 'success';
+    } catch {
+      executed = 'failed';
+    }
+
+    assert.equal('failed', executed);
+  });
+
+  it('allows the full campaign flow', async () => {
+    const manager = await campaign.methods.manager().call()
+    const approver = accounts[1];
+    const receiver = accounts[2];
+    let executed;
+
+    await campaign.methods
+      .createRequest('Buy Batteries', '100', receiver)
+      .send({
+        from: manager,
+        gas: '1000000'
+      });
+
+    // get request we just made
+    const request = await campaign.methods.requests(0).call();
+
+    await campaign.methods.contribute().send({ 
+      from: approver, 
+      value: '1000000'
+    });
+
+    await campaign.methods.approveRequest(0).send({
+      from: approver,
+      gas: 1000000
+    });
+
+    try {
+      await campaign.methods.finalizeRequest(0).send({
+        from: manager,
+        gas: 1000000
+      });
+      executed = 'success';
+    } catch {
+      executed = 'failed';
+    }
+
+    assert.equal('success', executed);
+
+    // get accounts balance from before vs after transaction as well.
+  });
 
   // it('does not allow non-contributors to vote', async () => {
 
