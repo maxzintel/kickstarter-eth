@@ -120,6 +120,10 @@ describe('Campaigns', () => {
     const receiver = accounts[2];
     let executed;
 
+    let originalBalance = await web3.eth.getBalance(receiver);
+    originalBalance = web3.utils.fromWei(originalBalance, 'ether');
+    originalBalance = parseFloat(originalBalance); // takes string and converts to number.
+
     await campaign.methods
       .createRequest('Buy Batteries', web3.utils.toWei('5', 'ether'), receiver)
       .send({
@@ -147,9 +151,16 @@ describe('Campaigns', () => {
       executed = 'failed';
     }
 
+    // assert the request is successfully finalized.
     assert.equal('success', executed);
 
-    // get accounts balance from before vs after transaction as well.
+    let newBalance = await web3.eth.getBalance(receiver);
+    newBalance = web3.utils.fromWei(newBalance, 'ether');
+    newBalance = parseFloat(newBalance);
+
+    // assert that generally the new balance is higher, then assert the exact increase.
+    assert(originalBalance < newBalance );
+    assert.equal(originalBalance + 5, newBalance);
   });
 
   // it('does not allow non-contributors to vote', async () => {
