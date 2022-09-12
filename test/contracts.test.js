@@ -162,13 +162,4 @@ describe('Campaigns', () => {
     assert(originalBalance < newBalance );
     assert.equal(originalBalance + 5, newBalance);
   });
-
-  // it('does not allow non-contributors to vote', async () => {
-
-  // });
-
-  // it('allows the manager to finalize a request', async () => {
-
-  // });
-
 });
