@@ -34,3 +34,17 @@ In sequential order this script...
 * Writes the output to the build directory.
 
 <!-- If CI/CD is added, only run compile when contracts folder is actually changed. -->
+
+## Campaign Frontend
+
+NOTE: There's no reason other than my own personal convenience that this frontend is in the same repo as the contract code. In fact, they _should_ be in different ones.
+
+### Routes
+
+* `/` - List of Campaigns
+* `campaigns/new` - Form to make a campaign
+* `/campaigns/$ADDRESS` - Campaign details for a campaign at address `$ADDRESS`
+* `/campaigns/$ADDRESS/requests` - Requests for above campaign
+* `/campaigns/$ADDRESS/requests/new` - Form to create a request for above campaign
+
+In next.js, the files within the `/pages` directory are automatically made as routes at that filename.

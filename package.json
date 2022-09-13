@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "deploy": "node deploy.js"
+    "deploy": "node deploy.js",
+    "dev": "next dev"
   },
   "author": "",
   "license": "ISC",
