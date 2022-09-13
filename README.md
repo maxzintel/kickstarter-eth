@@ -42,6 +42,11 @@ NOTE: There's no reason other than my own personal convenience that this fronten
 ### Routes
 
 * `/` - List of Campaigns
+  * Requirements:
+    * Configure web3 with a provider from metamask
+    * tell web3 that a deployed copy of the 'Factory' exists
+    * use Factory instance to retrieve a list of deployed campaigns
+    * use react to show something about each campaign
 * `campaigns/new` - Form to make a campaign
 * `/campaigns/$ADDRESS` - Campaign details for a campaign at address `$ADDRESS`
 * `/campaigns/$ADDRESS/requests` - Requests for above campaign
