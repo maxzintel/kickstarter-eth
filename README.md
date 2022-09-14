@@ -41,7 +41,7 @@ NOTE: There's no reason other than my own personal convenience that this fronten
 
 ### Routes
 
-* `/` - List of Campaigns
+* `/` - List of Campaigns - `/pages/index.js`
   * Requirements:
     * Configure web3 with a provider from metamask
     * tell web3 that a deployed copy of the 'Factory' exists
