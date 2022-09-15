@@ -53,3 +53,19 @@ NOTE: There's no reason other than my own personal convenience that this fronten
 * `/campaigns/$ADDRESS/requests/new` - Form to create a request for above campaign
 
 In next.js, the files within the `/pages` directory are automatically made as routes at that filename.
+
+### Next.JS
+
+Next JS uses something called server-side render. All the JS code is being executed on the Next Server, which renders an HTML doc, and sends that doc to the browser.
+
+Thus, content appears on the screen very quickly. Especially if users are on mobile.
+
+Data fetching logic also happens on the Next Server. Next fetches campaigns and other info from the  ETH Network BEFORE we ever require web3/Metamask being present.
+
+This is pretty cool, most ETH applications require a wallet to enter the 'app' presently. This one will not.
+
+```txt
+(our code) => (Next Server) => (HTML doc) => (our code)
+                   ||             ||            ||
+             (ETH NETWORK)       (    BROWSER     )
+```
