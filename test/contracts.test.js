@@ -3,8 +3,8 @@ const ganache = require('ganache-cli');
 const Web3 = require('web3'); // Capital W means we are using the constructor here.
 const web3 = new Web3(ganache.provider()); // instantiating the constructor above. Attempts to connect to local test network. Different providers will be set for 'production' networks.
 
-const compiledFactory = require('../build/Factory.json');
-const compiledCampaign = require('../build/Campaign.json');
+const compiledFactory = require('../web3/build/CampaignFactory.json');
+const compiledCampaign = require('../web3/build/Campaign.json');
 const { exec } = require('child_process');
 
 let accounts;
