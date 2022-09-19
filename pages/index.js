@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Card } from 'semantic-ui-react';
+// import 'semantic-ui-css/semantic.min.css'; // this also seems to work (remove link tag to see)
 
 // import factory instance
 import factory from '../web3/factory';
@@ -17,8 +19,32 @@ class CampaignIndex extends Component {
     return { campaigns };
   }
 
+  // iterate over list of campaign addresses and for each, create a new object.
+  renderCampaigns() {
+    // pass a function into map
+    // that function is then called one time for every element inside this array
+    // whatever we return is assigned to the items var.
+    const items = this.props.campaigns.map(address => {
+      return {
+        header: address,
+        description: <a>View Campaign</a>, // placeholder
+        fluid: true // tells the card to take up the width of its container.
+      };
+    });
+
+    return <Card.Group items={items}/>;
+  }
+
   render() {
-    return <h1>{this.props.campaigns[0]}</h1>
+    return <div>
+      <link
+      async
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
+      />
+      {this.renderCampaigns()}
+    </div>
+
   }
 }
 
