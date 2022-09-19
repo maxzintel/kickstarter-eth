@@ -3,4 +3,5 @@ node_modules
 .env
 .next
 next.conf.js
-./web3/deploy
+./web3/deploy.js
+deploy.js
