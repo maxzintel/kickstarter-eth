@@ -3,6 +3,10 @@ import React, { Component } from "react";
 // import factory instance
 import factory from '../web3/factory';
 
+// export async function getStaticProps(context) {
+
+// }
+
 class CampaignIndex extends Component {
   async componentDidMount() {
     const campaigns = await factory.methods.getDeployedCampaigns().call();
@@ -11,7 +15,7 @@ class CampaignIndex extends Component {
   }
 
   render() {
-    return <div>Campaigns Index!</div>
+    return <h1>Campaigns Index!</h1>
   }
 }
 
