@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Card, Button } from 'semantic-ui-react';
-// import 'semantic-ui-css/semantic.min.css'; // this also seems to work (remove link tag to see)
+import Layout from '../components/layout';
 
 // import factory instance
 import factory from '../web3/factory';
@@ -36,20 +36,21 @@ class CampaignIndex extends Component {
   }
 
   render() {
-    return <div>
-      <link
-      async
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
-      />
-      {this.renderCampaigns()}
-      <Button
-        content="Create Campaign"
-        icon="add circle"
-        primary={true} // A button can be formatted to show different levels of emphasis.
-      />
-    </div>
+    return (
+      <Layout>
+        <div>
+          <h3>Open Campaigns</h3>
+          <Button
+            content="Create Campaign"
+            icon="add circle"
+            floated="right"
+            primary={true} // A button can be formatted to show different levels of emphasis.
+          />
 
+          {this.renderCampaigns()}
+        </div>
+      </Layout>
+    )
   }
 }
 
