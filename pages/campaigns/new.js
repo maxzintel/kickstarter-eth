@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Layout from '../../components/layout';
-import { Form, Button, Input } from 'semantic-ui-react';
+import { Form, Button, Input, Message } from 'semantic-ui-react';
 import factory from '../../web3/factory';
 // need this to get list of accounts and tell createCampaign where we are coming from.
 import web3 from '../../web3/web3';
 
 class CampaignNew extends Component {
   state = {
-    minimumContribution: ''
+    minimumContribution: '',
+    errorMessage: ''
   };
 
   // Create event handler
@@ -15,13 +16,17 @@ class CampaignNew extends Component {
     // Keep browser from attempting to submit the form.
     event.preventDefault();
 
-    const accounts = await web3.eth.getAccounts();
-    // use imported factory instance
-    await factory.methods
-      .createCampaign(this.state.minimumContribution)
-      .send({
-        from: accounts[0]
-      });
+    try {
+      const accounts = await web3.eth.getAccounts();
+      // use imported factory instance
+      await factory.methods
+        .createCampaign(this.state.minimumContribution)
+        .send({
+          from: accounts[0]
+        });
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
   };
 
   render() {
@@ -29,7 +34,9 @@ class CampaignNew extends Component {
       <Layout>
         <h3>Create a Campaign</h3>
         {/* Pass a reference to onSubmit */}
-        <Form onSubmit={this.onSubmit}>
+        {/* Error here is set to an empty string by default, which is falsy, so the error will not appear until there is a real issue. */}
+        {/* !! here turns the string into its equivalent boolean. */}
+        <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
             <label>Minimum Contribution</label>
             <Input
@@ -43,6 +50,7 @@ class CampaignNew extends Component {
             />
           </Form.Field>
 
+          <Message error header="Oops!" content={this.state.errorMessage}/>
           <Button primary >Create</Button>
         </Form>
       </Layout>
