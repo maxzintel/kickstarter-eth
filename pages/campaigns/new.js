@@ -17,7 +17,7 @@ class CampaignNew extends Component {
     // Keep browser from attempting to submit the form.
     event.preventDefault();
 
-    this.setState({ loading: true });
+    this.setState({ loading: true, errorMessage: '' });
 
     try {
       const accounts = await web3.eth.getAccounts();
