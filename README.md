@@ -41,6 +41,8 @@ NOTE: There's no reason other than my own personal convenience that this fronten
 
 ### Routes
 
+Utilizes `next-routes` for dynamic routes.
+
 * `/` - List of Campaigns - `/pages/index.js`
   * Requirements:
     * Configure web3 with a provider from metamask
