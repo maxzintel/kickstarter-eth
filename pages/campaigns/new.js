@@ -4,6 +4,9 @@ import { Form, Button, Input, Message } from 'semantic-ui-react';
 import factory from '../../web3/factory';
 // need this to get list of accounts and tell createCampaign where we are coming from.
 import web3 from '../../web3/web3';
+// LINK: allows us to render anchor tags into react components
+// ROUTER: programmatically redirect people from one page to another.
+import { Link, Router } from '../../routes';
 
 class CampaignNew extends Component {
   state = {
@@ -27,6 +30,9 @@ class CampaignNew extends Component {
         .send({
           from: accounts[0]
         });
+      
+      // Redirect user back to home page.
+      Router.pushRoute('/');
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
