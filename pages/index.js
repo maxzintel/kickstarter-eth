@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button } from 'semantic-ui-react';
 import Layout from '../components/layout';
+import { Link } from '../routes';
 
 // import factory instance
 import factory from '../web3/factory';
@@ -27,7 +28,11 @@ class CampaignIndex extends Component {
     const items = this.props.campaigns.map(address => {
       return {
         header: address,
-        description: <a>View Campaign</a>, // placeholder
+        description: (
+          <Link route={`/campaigns/${address}`}>
+            <a>View Campaign</a>
+          </Link>
+        ),
         fluid: true // tells the card to take up the width of its container.
       };
     });
@@ -40,12 +45,16 @@ class CampaignIndex extends Component {
       <Layout>
         <div>
           <h3>Open Campaigns</h3>
-          <Button
-            content="Create Campaign"
-            icon="add circle"
-            floated="right"
-            primary={true} // A button can be formatted to show different levels of emphasis.
-          />
+          <Link route="/campaigns/new">
+            <a>
+              <Button
+                content="Create Campaign"
+                icon="add circle"
+                floated="right"
+                primary={true} // A button can be formatted to show different levels of emphasis.
+              />
+            </a>
+          </Link>
 
           {this.renderCampaigns()}
         </div>
