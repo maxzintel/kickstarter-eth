@@ -1,20 +1,27 @@
 import React from "react";
 import { Menu } from 'semantic-ui-react';
+import { Link } from '../routes';
  
 const Header = () => {
   return (
     // To use JSX to pass in an object literal, we need two sets of curlys
     <Menu style={{ marginTop: "10px" }}>
-      <Menu.Item name="title">
-        Kickstarter
-      </Menu.Item>
+      <Link route="/">
+        <a className="item">
+          Kickstarter
+        </a>
+      </Link>
+
       <Menu.Menu position="right">
-        <Menu.Item>
-          Campaigns
-        </Menu.Item>
-        <Menu.Item>
-          +
-        </Menu.Item>
+        <Link route="/">
+          <a className="item">
+            Campaigns
+          </a>
+        </Link>
+
+        <Link route="/campaigns/new">
+          <a className="item">+</a>
+        </Link>
       </Menu.Menu>
     </Menu>
   );

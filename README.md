@@ -1,5 +1,7 @@
 # Kickstarter but on Ethereum
 
+A project demonstrating a basic crowdfunding application on the Ethereum Blockchain
+
 ## Campaign Contract
 
 ### Variables
