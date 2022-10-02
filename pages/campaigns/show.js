@@ -11,40 +11,64 @@ class CampaignShow extends Component {
   static async getInitialProps(props) {
     const address = props.query.address;
     const campaign = Campaign(address);
+    // summary returns as an object with keys/vals
     const summary = await campaign.methods.getSummary().call();
 
-    const summaryObj = Object.entries(summary).map(([key, value]) => {
-      return {
-        key: key,
-        value: value
-      };
-    });
-
-    summaryObj[0].key;
-
-    console.log(summaryObj);
-
-    return { summary };
+    // even though summary is an object, we can refer to its values like its an array.
+    return {
+      minimumContribution: summary[0],
+      balance: summary[1],
+      requestsCount: summary[2],
+      approversCount: summary[3],
+      manager: summary[4]
+    };
   }
 
-  renderSummary() {
+  renderCards() {
+    const {
+      balance,
+      manager,
+      minimumContribution,
+      requestsCount,
+      approversCount
+    } = this.props;
 
-    const summary = Object.entries(this.props.summary).map(([key, value]) => {
-      return {
+    const items = [
+      {
+        header: manager,
+        meta: 'Campaign Manager',
+        description: 'The address of the campaigns manager & as such the address that manages request creation.',
+        style: { overflowWrap: 'break-word'}
+      },
+      {
+        header: balance,
+        meta: 'Balance of the Campaign',
+        description: 'Measured in Wei. Sum of all contributions thus far, less payments made by the campaign approved by its participants.',
+      },
+      {
+        header: minimumContribution,
+        meta: 'Minimum Contribution',
+        description: 'Measured in Wei. The minimum contribution an individual must make to participate in the campaign as an approver.',
+      },
+      {
+        header: requestsCount,
+        meta: 'Number of Requests',
+        description: 'Initiated by the campaigns manager, the number of requests made. Each request is a request to use some of the campaigns balance to pursue the goals of the campaign.',
+      },
+      {
+        header: approversCount,
+        meta: 'Number of Approvers',
+        description: 'Also the number of contributors. Greater than 50% this number is required to approve a request to use the campaign funds.',
+      }
+    ];
 
-      };
-    });
-
-    console.log(summary);
-
-    return summary;
-    // return <Card.Group items={summary}/>;
+    return <Card.Group items={items}/>;
   }
 
   render() {
     return (
       <Layout>
-        {/* {this.renderSummary()} */}
+        {this.renderCards()}
       </Layout>
     )
   }
