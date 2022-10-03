@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Layout from '../../components/layout';
-import { Form, Button, Input, Message, Card } from 'semantic-ui-react';
-import factory from '../../web3/factory';
+import ContributeForm from '../../components/contributeForm';
+import { Card, Grid, GridColumn } from 'semantic-ui-react';
 import web3 from '../../web3/web3';
-import { Link, Router } from '../../routes';
 import Campaign from '../../web3/campaign';
+import address from '../../web3/campaign';
 
 class CampaignShow extends Component {
 
@@ -20,7 +20,8 @@ class CampaignShow extends Component {
       balance: summary[1],
       requestsCount: summary[2],
       approversCount: summary[3],
-      manager: summary[4]
+      manager: summary[4],
+      address: props.query.address,
     };
   }
 
@@ -41,13 +42,13 @@ class CampaignShow extends Component {
         style: { overflowWrap: 'break-word'}
       },
       {
-        header: balance,
-        meta: 'Balance of the Campaign',
-        description: 'Measured in Wei. Sum of all contributions thus far, less payments made by the campaign approved by its participants.',
+        header: web3.utils.fromWei(balance, 'ether'),
+        meta: 'Balance of the Campaign (ether)',
+        description: 'Measured in Ether. Sum of all contributions thus far, less payments made by the campaign approved by its participants.',
       },
       {
         header: minimumContribution,
-        meta: 'Minimum Contribution',
+        meta: 'Minimum Contribution (wei)',
         description: 'Measured in Wei. The minimum contribution an individual must make to participate in the campaign as an approver.',
       },
       {
@@ -68,7 +69,15 @@ class CampaignShow extends Component {
   render() {
     return (
       <Layout>
-        {this.renderCards()}
+        <h3> </h3>
+        <Grid>
+          <Grid.Column width={10}>
+            {this.renderCards()}
+          </Grid.Column>
+          <Grid.Column width={6}>
+            <ContributeForm address={this.props.address} />
+          </Grid.Column>
+        </Grid>
       </Layout>
     )
   }
