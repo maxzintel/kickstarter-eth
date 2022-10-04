@@ -6,7 +6,8 @@ const routes = require('next-routes')();
 routes
   .add('/campaigns/new', '/campaigns/new')
 // :address means basically a wildcard variable we will name address.
-  .add('/campaigns/:address', '/campaigns/show');
+  .add('/campaigns/:address', '/campaigns/show')
+  .add('/campaigns/:address/requests', '/campaigns/requests/index.js');
 
 // exports helpers that allow us to automatically navigate users around the app
 module.exports = routes;

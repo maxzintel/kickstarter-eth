@@ -3,6 +3,7 @@ import { Form, Input, Message, Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import Campaign from '../web3/campaign';
 import web3 from "../web3/web3";
+import { Router } from '../../routes';
  
 class ContributeForm extends Component {
   state = {
@@ -26,13 +27,17 @@ class ContributeForm extends Component {
         from: accounts[0],
         value: web3.utils.toWei(this.state.value, "ether")
       });
+
+      // ES2015 template string
+      // effectively refreshes the page so the user can see their contribution automatically.
+      Router.replaceRoute(`/campaigns/${this.props.address}`);
     } catch (err) {
       this.setState({
         errorMessage: err.message
       });
     }
 
-    this.setState({loading: false});
+    this.setState({loading: false, value: '' });
   }
 
   render() {
