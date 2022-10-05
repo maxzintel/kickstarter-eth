@@ -4,7 +4,7 @@ import ContributeForm from '../../components/contributeForm';
 import { Button, Card, Grid } from 'semantic-ui-react';
 import web3 from '../../web3/web3';
 import Campaign from '../../web3/campaign';
-import { Link } from '../../routes';
+import { Link } from "../../routes";
 
 class CampaignShow extends Component {
 
@@ -71,17 +71,23 @@ class CampaignShow extends Component {
       <Layout>
         <h3> </h3>
         <Grid>
-          <Grid.Column width={10}>
-            {this.renderCards()}
-            <Link route={`/campaigns/${this.props.address}/requests`}>
-              <a>
-                <Button primary>View Requests</Button>
-              </a>
-            </Link>
-          </Grid.Column>
-          <Grid.Column width={6}>
-            <ContributeForm address={this.props.address} />
-          </Grid.Column>
+          <Grid.Row>
+            <Grid.Column width={10}>
+              {this.renderCards()}
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <ContributeForm address={this.props.address} />
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Link route={`/campaigns/${this.props.address}/requests`}>
+                <a>
+                  <Button primary>View Requests</Button>
+                </a>
+              </Link>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       </Layout>
     )

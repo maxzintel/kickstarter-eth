@@ -7,7 +7,7 @@ routes
   .add('/campaigns/new', '/campaigns/new')
 // :address means basically a wildcard variable we will name address.
   .add('/campaigns/:address', '/campaigns/show')
-  .add('/campaigns/:address/requests', '/campaigns/requests/index.js');
+  .add('/campaigns/:address/requests', '/campaigns/requests/index');
 
 // exports helpers that allow us to automatically navigate users around the app
 module.exports = routes;

@@ -3,7 +3,7 @@ import { Form, Input, Message, Button } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import Campaign from '../web3/campaign';
 import web3 from "../web3/web3";
-import { Router } from '../../routes';
+import { Router } from '../routes';
  
 class ContributeForm extends Component {
   state = {
