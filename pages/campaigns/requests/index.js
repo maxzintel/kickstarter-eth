@@ -12,6 +12,7 @@ class RequestIndex extends Component {
     // the plus here converts this return value to an int.
     // otherwise, requests only returns 1 element because the number is simply a string rather than an actual int it can measure length with.
     const requestCount = +await campaign.methods.getRequestsCount().call();
+    const approversCount = await campaign.methods.approversCount().call()
 
     // Create array of returned structs(console.log it)
     // What we are trying to do here is iterate from 0 to the value of request count.
@@ -21,7 +22,7 @@ class RequestIndex extends Component {
       })
     );
 
-    return { address, requests, requestCount };
+    return { address, requests, requestCount, approversCount };
   }
 
   // We need to setup an array of structs
@@ -34,6 +35,7 @@ class RequestIndex extends Component {
         id={index}
         request={request}
         address={this.props.address}
+        approversCount={this.props.approversCount}
       />;
     });
   }
@@ -55,7 +57,7 @@ class RequestIndex extends Component {
             <Row>
               <HeaderCell>ID</HeaderCell>
               <HeaderCell>Description</HeaderCell>
-              <HeaderCell>Amount</HeaderCell>
+              <HeaderCell>Amount (ether)</HeaderCell>
               <HeaderCell>Recipient</HeaderCell>
               <HeaderCell>Approval Count</HeaderCell>
               <HeaderCell>Approve</HeaderCell>
