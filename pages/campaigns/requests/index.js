@@ -3,6 +3,7 @@ import Layout from "../../../components/layout";
 import { Link } from "../../../routes";
 import { Button, Table } from 'semantic-ui-react';
 import Campaign from '../../../web3/campaign';
+import RequestRow from "../../../components/requestRow";
 
 class RequestIndex extends Component {
   static async getInitialProps(props) {
@@ -25,10 +26,17 @@ class RequestIndex extends Component {
 
   // We need to setup an array of structs
   // Request is a struct in our contract code.
-
-  // renderRequests() {
-  //   const items = this.props.campaign.
-  // }
+  renderRows() {
+    // arrow function is called for every request/index of request
+    return this.props.requests.map((request, index) => {
+      return <RequestRow
+        key={index}
+        id={index}
+        request={request}
+        address={this.props.address}
+      />;
+    });
+  }
 
   render() {
     // es2015 destructuring
@@ -45,21 +53,23 @@ class RequestIndex extends Component {
         <Table striped>
           <Header>
             <Row>
+              <HeaderCell>ID</HeaderCell>
               <HeaderCell>Description</HeaderCell>
               <HeaderCell>Amount</HeaderCell>
               <HeaderCell>Recipient</HeaderCell>
-              <HeaderCell>Completed</HeaderCell>
               <HeaderCell>Approval Count</HeaderCell>
+              <HeaderCell>Approve</HeaderCell>
+              <HeaderCell>Finalize</HeaderCell>
             </Row>
           </Header>
 
           <Body>
-
+            {this.renderRows()}
           </Body>
         </Table>
       </Layout>
     );
-  }
+  };
 }
 
 export default RequestIndex;
