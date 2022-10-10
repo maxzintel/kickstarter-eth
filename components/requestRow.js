@@ -18,7 +18,11 @@ class RequestRow extends Component {
     this.setState({ loading: true, errorMessage: ''});
 
     try {
-      await campaign.methods.approveRequest(this.props.id).call();
+      const accounts = await web3.eth.getAccounts();
+
+      await campaign.methods.approveRequest(this.props.id).send({
+        from: accounts[0]
+      });
       Router.replaceRoute(`/campaigns/${this.props.address}`)
     } catch (err) {
       this.setState({ errorMessage: err.message })
@@ -30,7 +34,26 @@ class RequestRow extends Component {
   }
 
   onFinalize = async (event) => {
+    event.preventDefault();
 
+    const campaign = Campaign(this.props.address);
+
+    this.setState({ loading: true, errorMessage: ''});
+
+    try {
+      const accounts = await web3.eth.getAccounts()
+
+      await campaign.methods.finalizeRequest(this.props.id).send({
+        from: accounts[0]
+      });
+      Router.replaceRoute(`/campaigns/${this.props.address}`)
+    } catch (err) {
+      this.setState({ errorMessage: err.message })
+    }
+
+    this.setState({
+      loading: false
+    });
   }
 
   render() {
